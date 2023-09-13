@@ -5,15 +5,30 @@ using SkiaSharp;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using VauI.Model;
 
 namespace MauiAppTestCollViewLiveCharts2
 {
     public class ChartViewModel
     {
-        public ISeries[] Series { get; set; }
-        public RectangularSection[] Sections { get; set; }
-        public Axis[] YAxes { get; set; }
+        private ISeries[] _series;
+        private RectangularSection[] _sections;
+        private Axis[] _axis;
+
+        public ISeries[] Series
+        {
+            set => SetProperty<ISeries[]>(ref _series, value);
+            get => _series;
+        }
+        public RectangularSection[] Sections
+        {
+            set => SetProperty<RectangularSection[]>(ref _sections, value);
+            get => _sections;
+        }
+        public Axis[] YAxes
+        {
+            set => SetProperty<Axis[]>(ref _axis, value);
+            get => _axis;
+        }
 
         private ObservableCollection<LiveCharts2Diagram> _diagrams = new();
         public ObservableCollection<LiveCharts2Diagram> Diagrams
@@ -29,44 +44,20 @@ namespace MauiAppTestCollViewLiveCharts2
         }
 
         public Command ToCollViewCommand
-        => new Command<string>((url) => Shell.Current.GoToAsync(url));
+        => new Command<string>((url) => 
+            {
+                Shell.Current.GoToAsync(url);
+                RaiseDiagrams();
+            });
 
         private void Init()
         {
-            LiveCharts2Diagram toAdd = new()
-            {
-                Series = new ISeries[]
-                {
-                    new LineSeries<double>
-                    {
-                        Values = new double[] {1,3,7,5,2,8,7},
-                        Fill = null
-                    }
-                },
-                Sections = new RectangularSection[]
-                {
-                    new RectangularSection
-                    {
-                        Yi=0.0,
-                        Yj=1.0,
-                        Fill = new SolidColorPaint(SKColors.Red.WithAlpha(50))
-                    },
-                    new RectangularSection
-                    {
-                        Yi=8.0,
-                        Yj=10.0,
-                        Fill = new SolidColorPaint(SKColors.Red.WithAlpha(50))
-                    }
-                },
-                YAxes = new Axis[]
-                  {
-                        new Axis
-                        {
-                            MinLimit = 0.0,
-                            MaxLimit = 10.0
-                        }
-                  }
-            };
+            LiveCharts2Diagram toAdd = new();
+            toAdd.AddSeries(new double[] { 1, 3, 7, 5, 2, 8, 7 });
+            toAdd.AddSection(0.0, 1.0, SKColors.Red, 50);
+            toAdd.AddSection(8.0, 10.0, SKColors.Yellow, 100);
+            toAdd.AddAxis("y", 0.0, 10.0);
+
             Diagrams.Add(toAdd);
             Series = toAdd.Series;
             YAxes = toAdd.YAxes;
