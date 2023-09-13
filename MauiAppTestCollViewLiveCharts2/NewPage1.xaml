@@ -8,9 +8,8 @@
 
     <ContentPage.Content>
         <Grid>
-            <CollectionView x:Name="collMeasurements"
-                ItemsSource="{Binding Diagrams}"
-                VerticalOptions="FillAndExpand">
+            <CollectionView x:Name="collData"
+                ItemsSource="{Binding Diagrams}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <lch:CartesianChart Series="{Binding Series}"
