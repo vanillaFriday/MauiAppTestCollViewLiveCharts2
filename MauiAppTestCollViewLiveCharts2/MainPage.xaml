@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:MauiAppTestCollViewLiveCharts2"
+             xmlns:lch="clr-namespace:LiveChartsCore.SkiaSharpView.Maui;assembly=LiveChartsCore.SkiaSharpView.Maui"
+             x:DataType="local:ChartViewModel"
+             x:Class="MauiAppTestCollViewLiveCharts2.MainPage">
+
+    <ContentPage.Content>
+        
+            <Grid ColumnDefinitions="*,200">
+                <lch:CartesianChart Series="{Binding Series}"
+                                    YAxes="{Binding YAxes}"
+                                    Sections="{Binding Sections}">
+                </lch:CartesianChart>
+            <Button Text="to CollectionView" Command="{Binding ToCollViewCommand}" CommandParameter="otherpage" Grid.Column="1"/>
+        </Grid>
+            
+       
+    </ContentPage.Content>
+
+</ContentPage>
+
+
