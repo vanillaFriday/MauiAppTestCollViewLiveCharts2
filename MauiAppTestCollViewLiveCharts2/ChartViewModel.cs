@@ -59,6 +59,9 @@ namespace MauiAppTestCollViewLiveCharts2
             toAdd.AddAxis("y", 0.0, 10.0);
 
             Diagrams.Add(toAdd);
+            Diagrams.Add(toAdd);
+            Diagrams.Add(toAdd);
+            Diagrams.Add(toAdd);
             Series = toAdd.Series;
             YAxes = toAdd.YAxes;
             Sections = toAdd.Sections;
